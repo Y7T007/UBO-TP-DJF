@@ -10,7 +10,7 @@ import jakarta.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
-@Table(name = "ETUDIANT", schema = "DOSI")
+@Table()
 public class Etudiant {
 
     @Id

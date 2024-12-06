@@ -15,10 +15,12 @@ public class EtudiantService {
 
     @Autowired
     public EtudiantService(EtudiantRepository etudiantRepository) {
+
         this.etudiantRepository = etudiantRepository;
     }
 
     public List<Etudiant> getAllEtudiants() {
+
         return etudiantRepository.findAll();
     }
 
