@@ -6,6 +6,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.util.Date;
 
@@ -108,6 +111,7 @@ public class Etudiant {
 
     @Column(name = "EST_DIPLOME", nullable = false, length = 1)
     private char estDiplome = 'N';
+
 
     public String getNoEtudiantNat() {
         return noEtudiantNat;

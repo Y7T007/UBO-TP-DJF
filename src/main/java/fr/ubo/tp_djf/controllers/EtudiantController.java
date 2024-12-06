@@ -17,7 +17,7 @@ public class EtudiantController {
         this.etudiantService = etudiantService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Etudiant> getAllEtudiants() {
         return etudiantService.getAllEtudiants();
     }
@@ -27,7 +27,7 @@ public class EtudiantController {
         return etudiantService.getEtudiantById(id);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public Etudiant createEtudiant(@RequestBody Etudiant etudiant) {
         return etudiantService.saveEtudiant(etudiant);
     }

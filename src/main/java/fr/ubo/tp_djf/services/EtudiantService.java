@@ -11,6 +11,7 @@ import java.util.Optional;
 @Service
 public class EtudiantService {
 
+    @Autowired
     private final EtudiantRepository etudiantRepository;
 
     @Autowired
@@ -24,11 +25,6 @@ public class EtudiantService {
 
     public Etudiant getEtudiantById(String id) {
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
-        return etudiant.orElse(null);
-    }
-
-    public Etudiant getEtudiantByNoEtudiantNat(String noEtudiantNat) {
-        Optional<Etudiant> etudiant = etudiantRepository.findByNoEtudiantNat(noEtudiantNat);
         return etudiant.orElse(null);
     }
 
