@@ -5,7 +5,7 @@ import { selectEtudiant } from "../redux/StudentSlice";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-const EtudiantDetail = () => {
+ const EtudiantDetail = () => {
   const [modifiable, setModifiable] = useState(false);
   const { id } = useParams();
 

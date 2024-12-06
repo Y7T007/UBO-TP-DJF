@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "font-awesome/css/font-awesome.min.css";
 import axios from "axios";
 
-const EtudiantDetail = () => {
-  const [modifiable, setModifiable] = useState(true);  // Allow editing by default
+export const CreateEtudiant = () => {
+  const [modifiable, setModifiable] = useState(true); 
   const [etudiant, setEtudiant] = useState({
     noEtudiantNat: "",
     anneePro: "",
@@ -118,4 +118,3 @@ const EtudiantDetail = () => {
   );
 };
 
-export default EtudiantDetail;
