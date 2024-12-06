@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { fetchEtudiants, selectLoading, selectError } from './ListSlice';
 import DeleteEtudiant from './DeleteEtudiant';
 
 const ListEtudiant = () => {
   const navigate = useNavigate();
-  
-  const [etudiants, setEtudiants] = useState([
+  const dispatch = useDispatch();
+
+  /* const [etudiants, setEtudiants] = useState([
     {
       noEtudiantNat: '123',
       nom: 'Dupont',
@@ -22,13 +25,35 @@ const ListEtudiant = () => {
       anneePro: '2023',
       estDiplome: 'Y',
     },
-  ]);
+  ]);*/
 
+ 
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+  const [etudiants, setEtudiants] = useState([]);
+
+  
+  useEffect(() => {
+    dispatch(fetchEtudiants())
+      .unwrap()
+      .then((data) => setEtudiants(data)) 
+      .catch((err) => console.error("Erreur lors de la récupération des étudiants :", err));
+  }, [dispatch]);
+
+  
   const handleDelete = (noEtudiantNat) => {
     setEtudiants((prev) =>
       prev.filter((etudiant) => etudiant.noEtudiantNat !== noEtudiantNat)
     );
   };
+
+  if (loading) {
+    return <p className="text-center text-gray-600">Chargement des étudiants...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500">Erreur : {error}</p>;
+  }
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-100 py-8">
@@ -60,7 +85,7 @@ const ListEtudiant = () => {
               >
                 <td className="py-3 px-6 text-left">
                   <Link
-                    to={`/etudiant/${etudiant.noEtudiantNat}`}
+                    to={`/Detail/${etudiant.noEtudiantNat}`}
                     className="text-blue-500 hover:underline"
                   >
                     {etudiant.noEtudiantNat}
