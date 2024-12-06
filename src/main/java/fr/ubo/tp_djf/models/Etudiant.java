@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
-@Table(name = "ETUDIANT", schema = "DOSI")
+@Table()
 public class Etudiant {
 
     @Id
