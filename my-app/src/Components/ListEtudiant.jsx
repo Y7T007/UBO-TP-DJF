@@ -8,7 +8,7 @@ const ListEtudiant = () => {
   // Liste fictive d'étudiants
   const [etudiants, setEtudiants] = useState([
     {
-      noEtudiantNat: '123',
+      noEtudiantNat: '1234567890',
       nom: 'Dupont',
       prenom: 'Jean',
       email: 'jean.dupont@example.com',
@@ -62,7 +62,7 @@ const ListEtudiant = () => {
               >
                 <td className="py-3 px-6 text-left">
                   <Link
-                    to={`/etudiant/${etudiant.noEtudiantNat}`}
+                    to={`/Detail/${etudiant.noEtudiantNat}`}
                     className="text-blue-500 hover:underline"
                   >
                     {etudiant.noEtudiantNat}
