@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-<<<<<<< HEAD
 import ListEtudiant from './Components/ListEtudiant';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import EtudiantDetail from './Components/EtudiantDetail';
 
 
 function App() {
@@ -10,17 +10,10 @@ function App() {
     <Router>
     <Routes>
       <Route path="/" element={<ListEtudiant />} />
+      <Route path="/Detail" element={<EtudiantDetail />} />
+
     </Routes>
   </Router>
-=======
-import EtudiantDetail from './Components/EtudiantDetail';
-
-function App() {
-  return (
-    <div className="App">
-      <EtudiantDetail/>
-    </div>
->>>>>>> cecb145 (Styler)
   );
 }
 
