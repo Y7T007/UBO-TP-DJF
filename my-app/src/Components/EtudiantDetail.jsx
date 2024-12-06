@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import "font-awesome/css/font-awesome.min.css";
+import { useSelector } from "react-redux";
+import { selectEtudiant } from "../redux/StudentSlice";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const EtudiantDetail = () => {
   const [modifiable, setModifiable] = useState(false);
+  const { id } = useParams();
+
+  //const etudianttt = useSelector(selectEtudiant);
 
   const initialEtudiant = {
     noEtudiantNat: "1234567890",
@@ -48,7 +55,15 @@ const EtudiantDetail = () => {
     }));
   };
 
-  const toggleEditMode = () => {
+  const toggleEditMode = async () => {
+    if (modifiable) {
+      try {
+        await axios.put(`http://localhost:8080/api/update/${id}`, etudiant);
+        alert("Modifications sauvegardées !");
+      } catch (error) {
+        alert("Erreur lors de la sauvegarde");
+      }
+    }
     setModifiable(!modifiable);
   };
 
@@ -78,21 +93,17 @@ const EtudiantDetail = () => {
             {etudiant.nom} {etudiant.prenom}
           </h2>
           <button
-            onClick={toggleEditMode}
-            className={`flex items-center px-4 py-2 text-white rounded-lg transition ${
-              modifiable
-                ? "bg-green-500 hover:bg-green-600"
-                : "bg-blue-500 hover:bg-blue-600"
-            }`}
-          >
-            <i
-              className={`fa ${
-                modifiable ? "fa-check" : "fa-pencil"
-              } mr-2`}
-              aria-hidden="true"
-            ></i>
-            {modifiable ? "Sauvegarder" : "Modifier"}
-          </button>
+      onClick={toggleEditMode}
+      className={`flex items-center px-4 py-2 text-white rounded-lg transition ${
+        modifiable ? "bg-green-500 hover:bg-green-600" : "bg-blue-500 hover:bg-blue-600"
+      }`}
+    >
+      <i
+        className={`fa ${modifiable ? "fa-check" : "fa-pencil"} mr-2`}
+        aria-hidden="true"
+      ></i>
+      {modifiable ? "Sauvegarder" : "Modifier"}
+    </button>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
