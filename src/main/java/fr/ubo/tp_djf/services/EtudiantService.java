@@ -27,7 +27,15 @@ public class EtudiantService {
         return etudiant.orElse(null);
     }
 
+    public Etudiant getEtudiantByNoEtudiantNat(String noEtudiantNat) {
+        Optional<Etudiant> etudiant = etudiantRepository.findByNoEtudiantNat(noEtudiantNat);
+        return etudiant.orElse(null);
+    }
+
     public Etudiant saveEtudiant(Etudiant etudiant) {
+        if (etudiant.getNoEtudiantNat() == null || etudiant.getNoEtudiantNat().isEmpty()) {
+            throw new IllegalArgumentException("The student ID (noEtudiantNat) must be provided.");
+        }
         return etudiantRepository.save(etudiant);
     }
 
