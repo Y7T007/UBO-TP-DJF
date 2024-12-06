@@ -12,7 +12,7 @@
       'list/fetchEtudiants',
       async (_, { rejectWithValue }) => {
         try {
-          const response = await axios.get('http://localhost:8080/api/read'); 
+          const response = await axios.get('http://localhost:8080/api/etudiants/read'); 
           return response.data; // Retourne les données récupérées
         } catch (error) {
           return rejectWithValue(error.response?.data || 'Erreur serveur');

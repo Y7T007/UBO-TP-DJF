@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import DeleteEtudiant from './DeleteEtudiant'; // Importer le composant
+import { Link, useNavigate } from 'react-router-dom';
+import DeleteEtudiant from './DeleteEtudiant';
 
 const ListEtudiant = () => {
-  // Liste fictive d'étudiants pour tester l'affichage
+  const navigate = useNavigate();
+  
+  // Liste fictive d'étudiants
   const [etudiants, setEtudiants] = useState([
     {
       noEtudiantNat: '123',
@@ -21,14 +23,6 @@ const ListEtudiant = () => {
       anneePro: '2023',
       estDiplome: 'Y',
     },
-    {
-      noEtudiantNat: '125',
-      nom: 'Durand',
-      prenom: 'Paul',
-      email: 'paul.durand@example.com',
-      anneePro: '2024',
-      estDiplome: 'N',
-    },
   ]);
 
   // Fonction pour mettre à jour la liste après suppression
@@ -40,7 +34,15 @@ const ListEtudiant = () => {
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-100 py-8">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Liste des étudiants</h2>
+      <div className="flex justify-between w-3/4 max-w-4xl mb-4">
+        <h2 className="text-2xl font-semibold text-gray-800">Liste des étudiants</h2>
+        <button
+          onClick={() => navigate('/Creer')}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+        >
+          Ajouter un étudiant
+        </button>
+      </div>
       {etudiants.length > 0 ? (
         <table className="w-3/4 max-w-4xl bg-white shadow-md rounded-lg overflow-hidden">
           <thead className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -49,8 +51,6 @@ const ListEtudiant = () => {
               <th className="py-3 px-6 text-left">Nom</th>
               <th className="py-3 px-6 text-left">Prénom</th>
               <th className="py-3 px-6 text-left">Email</th>
-              <th className="py-3 px-6 text-left">Année</th>
-              <th className="py-3 px-6 text-left">Diplômé</th>
               <th className="py-3 px-6 text-left">Actions</th>
             </tr>
           </thead>
@@ -62,7 +62,7 @@ const ListEtudiant = () => {
               >
                 <td className="py-3 px-6 text-left">
                   <Link
-                    to={`/read/${etudiant.noEtudiantNat}`}
+                    to={`/etudiant/${etudiant.noEtudiantNat}`}
                     className="text-blue-500 hover:underline"
                   >
                     {etudiant.noEtudiantNat}
@@ -71,10 +71,6 @@ const ListEtudiant = () => {
                 <td className="py-3 px-6 text-left">{etudiant.nom}</td>
                 <td className="py-3 px-6 text-left">{etudiant.prenom}</td>
                 <td className="py-3 px-6 text-left">{etudiant.email}</td>
-                <td className="py-3 px-6 text-left">{etudiant.anneePro}</td>
-                <td className="py-3 px-6 text-left">
-                  {etudiant.estDiplome === 'Y' ? 'Oui' : 'Non'}
-                </td>
                 <td className="py-3 px-6 text-left">
                   <DeleteEtudiant
                     noEtudiantNat={etudiant.noEtudiantNat}
