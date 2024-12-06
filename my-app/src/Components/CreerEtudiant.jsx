@@ -81,6 +81,9 @@ export const CreateEtudiant = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {renderField("Nom", "nom", etudiant.nom)}
+        {renderField("Prenom", "prenom", etudiant.prenom)}
+
           {renderField("Numéro Étudiant National", "noEtudiantNat", etudiant.noEtudiantNat)}
           {renderField("Année Professionnelle", "anneePro", etudiant.anneePro)}
           {renderField("Code Com", "codeCom", etudiant.codeCom)}
