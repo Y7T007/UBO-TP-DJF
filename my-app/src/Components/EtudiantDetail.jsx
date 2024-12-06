@@ -9,9 +9,9 @@ import { useParams } from "react-router-dom";
   const [modifiable, setModifiable] = useState(false);
   const { id } = useParams();
 
-  //const etudianttt = useSelector(selectEtudiant);
+  const initialEtudiant = useSelector(selectEtudiant);
 
-  const initialEtudiant = {
+  /*const initialEtudiant = {
     noEtudiantNat: "1234567890",
     anneePro: 2024,
     codeCom: "56789",
@@ -44,7 +44,7 @@ import { useParams } from "react-router-dom";
     abandonDate: null,
     estDiplome: false,
   };
-
+*/
   const [etudiant, setEtudiant] = useState(initialEtudiant);
 
   const handleChange = (e) => {
@@ -58,7 +58,7 @@ import { useParams } from "react-router-dom";
   const toggleEditMode = async () => {
     if (modifiable) {
       try {
-        await axios.put(`http://localhost:8080/api/update/${id}`, etudiant);
+        await axios.put(`http://localhost:8080/etudiants/${id}`, etudiant);
         alert("Modifications sauvegardées !");
       } catch (error) {
         alert("Erreur lors de la sauvegarde");

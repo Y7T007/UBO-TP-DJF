@@ -1,10 +1,4 @@
-    /*
-    noEtudiantNat	
-    nom	
-    prenom	
-    email	
-    anneePro	
-    estDiplome*/
+  
     import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
     import axios from 'axios';
     
@@ -12,8 +6,8 @@
       'list/fetchEtudiants',
       async (_, { rejectWithValue }) => {
         try {
-          const response = await axios.get('http://localhost:8080/api/etudiants/read'); 
-          return response.data; // Retourne les données récupérées
+          const response = await axios.get('http://localhost:8080/etudiants/'); 
+          return response.data; 
         } catch (error) {
           return rejectWithValue(error.response?.data || 'Erreur serveur');
         }
@@ -35,11 +29,11 @@
           })
           .addCase(fetchEtudiants.fulfilled, (state, action) => {
             state.loading = false;
-            state.etudiants = action.payload; // Met à jour la liste des étudiants
+            state.etudiants = action.payload; 
           })
           .addCase(fetchEtudiants.rejected, (state, action) => {
             state.loading = false;
-            state.error = action.payload; // Stocke le message d'erreur
+            state.error = action.payload; 
           });
       },
     });

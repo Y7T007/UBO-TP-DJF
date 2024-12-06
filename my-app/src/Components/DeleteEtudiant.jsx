@@ -1,13 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 
-const DeleteEtudiant = ({ noEtudiantNat, onDelete }) => {
-  // Fonction pour supprimer l'étudiant
+const DeleteEtudiant = ({ id, onDelete }) => {
   const handleDelete = async () => {
     try {
-      // Appel DELETE vers le backend
-      await axios.delete(`http://localhost:8080/api/etudiants/${noEtudiantNat}`);
-      // Appeler la fonction onDelete après suppression
+      await axios.delete(`http://localhost:8080/etudiants/${id}`);
       onDelete(noEtudiantNat);
     } catch (error) {
       console.error("Erreur lors de la suppression de l'étudiant :", error);

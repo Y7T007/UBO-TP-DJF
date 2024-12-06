@@ -5,10 +5,9 @@ import DeleteEtudiant from './DeleteEtudiant';
 const ListEtudiant = () => {
   const navigate = useNavigate();
   
-  // Liste fictive d'étudiants
   const [etudiants, setEtudiants] = useState([
     {
-      noEtudiantNat: '1234567890',
+      noEtudiantNat: '123',
       nom: 'Dupont',
       prenom: 'Jean',
       email: 'jean.dupont@example.com',
@@ -25,7 +24,6 @@ const ListEtudiant = () => {
     },
   ]);
 
-  // Fonction pour mettre à jour la liste après suppression
   const handleDelete = (noEtudiantNat) => {
     setEtudiants((prev) =>
       prev.filter((etudiant) => etudiant.noEtudiantNat !== noEtudiantNat)
@@ -62,7 +60,7 @@ const ListEtudiant = () => {
               >
                 <td className="py-3 px-6 text-left">
                   <Link
-                    to={`/Detail/${etudiant.noEtudiantNat}`}
+                    to={`/etudiant/${etudiant.noEtudiantNat}`}
                     className="text-blue-500 hover:underline"
                   >
                     {etudiant.noEtudiantNat}

@@ -5,7 +5,7 @@ export const fetchEtudiant = createAsyncThunk(
   "etudiant/fetchEtudiant",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/read/${id}`);
+      const response = await axios.get(`http://localhost:8080/etudiants/${id}`);
       return response.data; 
     } catch (error) {
       return rejectWithValue(error.response?.data || "Erreur serveur");
