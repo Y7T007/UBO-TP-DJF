@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import "font-awesome/css/font-awesome.min.css";
 
-export const EtudiantDetail = () => {
-  // Définir l'état modifiable pour gérer l'accès aux champs
+const EtudiantDetail = () => {
   const [modifiable, setModifiable] = useState(false);
 
-  const Etudiant = {
+  const initialEtudiant = {
     noEtudiantNat: "1234567890",
     anneePro: 2024,
     codeCom: "56789",
@@ -38,268 +38,87 @@ export const EtudiantDetail = () => {
     estDiplome: false,
   };
 
+  const [etudiant, setEtudiant] = useState(initialEtudiant);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEtudiant((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const toggleEditMode = () => {
+    setModifiable(!modifiable);
+  };
+
+  const renderField = (label, name, value, type = "text") => (
+    <div className="mb-4">
+      <label className="block text-sm font-medium text-gray-600">{label}:</label>
+      <input
+        name={name}
+        type={type}
+        value={value}
+        onChange={handleChange}
+        disabled={!modifiable}
+        className={`mt-1 block w-full p-2 text-sm border rounded-lg ${
+          modifiable
+            ? "border-blue-500 bg-white"
+            : "border-gray-300 bg-gray-100"
+        } focus:ring focus:ring-blue-200`}
+      />
+    </div>
+  );
+
   return (
-    <div className="p-6 font-sans space-y-6">
-      <h2 className="text-2xl font-bold mb-4">Carte De Détail des Étudiants</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Numéro Étudiant National:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.noEtudiantNat}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Année Professionnelle:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.anneePro}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Code Com:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.codeCom}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
+    <div className="min-h-screen bg-gray-100 py-8 flex justify-center items-center">
+      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">
+            {etudiant.nom} {etudiant.prenom}
+          </h2>
+          <button
+            onClick={toggleEditMode}
+            className={`flex items-center px-4 py-2 text-white rounded-lg transition ${
+              modifiable
+                ? "bg-green-500 hover:bg-green-600"
+                : "bg-blue-500 hover:bg-blue-600"
+            }`}
+          >
+            <i
+              className={`fa ${
+                modifiable ? "fa-check" : "fa-pencil"
+              } mr-2`}
+              aria-hidden="true"
+            ></i>
+            {modifiable ? "Sauvegarder" : "Modifier"}
+          </button>
         </div>
 
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Numéro Étudiant UBO:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.noEtudiantUbo}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Sexe:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.sexe}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Date de Naissance:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.dateNaissance}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Lieu de Naissance:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.lieuNaissance}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Situation:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.situation}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Nationalité:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.nationalite}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Téléphone Portable:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.telPort}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Téléphone Fixe:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.telFixe}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Email:</strong>
-          </label>
-          <input
-            type="email"
-            value={Etudiant.email}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Adresse Actuelle:</strong>
-          </label>
-          <input
-            type="text"
-            value={`${Etudiant.actuAdresse}, ${Etudiant.actuCp}, ${Etudiant.actuVille}, ${Etudiant.actuPays}`}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Adresse Permanente:</strong>
-          </label>
-          <input
-            type="text"
-            value={`${Etudiant.permAdresse}, ${Etudiant.permCp}, ${Etudiant.permVille}, ${Etudiant.permPays}`}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Dernier Diplôme:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.dernierDiplome}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Université:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.universite}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Sigle Étudiant:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.sigleEtu}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Compte CRI:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.compteCri}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Email UBO:</strong>
-          </label>
-          <input
-            type="email"
-            value={Etudiant.uboEmail}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Groupe Anglais:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.grpeAnglais}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Motif d'Abandon:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.abandonMotif || "Non applicable"}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Date d'Abandon:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.abandonDate || "Non applicable"}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">
-            <strong>Diplômé:</strong>
-          </label>
-          <input
-            type="text"
-            value={Etudiant.estDiplome ? "Oui" : "Non"}
-            disabled={!modifiable}
-            className="border border-gray-300 p-2 w-full"
-          />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {renderField("Numéro Étudiant National", "noEtudiantNat", etudiant.noEtudiantNat)}
+          {renderField("Année Professionnelle", "anneePro", etudiant.anneePro)}
+          {renderField("Code Com", "codeCom", etudiant.codeCom)}
+          {renderField("Numéro Étudiant UBO", "noEtudiantUbo", etudiant.noEtudiantUbo)}
+          {renderField("Sexe", "sexe", etudiant.sexe)}
+          {renderField("Date de Naissance", "dateNaissance", etudiant.dateNaissance)}
+          {renderField("Lieu de Naissance", "lieuNaissance", etudiant.lieuNaissance)}
+          {renderField("Situation", "situation", etudiant.situation)}
+          {renderField("Nationalité", "nationalite", etudiant.nationalite)}
+          {renderField("Téléphone Portable", "telPort", etudiant.telPort)}
+          {renderField("Téléphone Fixe", "telFixe", etudiant.telFixe)}
+          {renderField("Email", "email", etudiant.email, "email")}
+          {renderField("Adresse Actuelle", "actuAdresse", etudiant.actuAdresse)}
+          {renderField("Adresse Permanente", "permAdresse", etudiant.permAdresse)}
+          {renderField("Dernier Diplôme", "dernierDiplome", etudiant.dernierDiplome)}
+          {renderField("Université", "universite", etudiant.universite)}
+          {renderField("Sigle Étudiant", "sigleEtu", etudiant.sigleEtu)}
+          {renderField("Compte CRI", "compteCri", etudiant.compteCri)}
+          {renderField("Email UBO", "uboEmail", etudiant.uboEmail, "email")}
+          {renderField("Groupe Anglais", "grpeAnglais", etudiant.grpeAnglais)}
+          {renderField("Motif d'Abandon", "abandonMotif", etudiant.abandonMotif || "Non applicable")}
+          {renderField("Date d'Abandon", "abandonDate", etudiant.abandonDate || "Non applicable")}
+          {renderField("Diplômé", "estDiplome", etudiant.estDiplome ? "Oui" : "Non")}
         </div>
       </div>
     </div>
