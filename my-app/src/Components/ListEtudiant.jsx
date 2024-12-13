@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { fetchEtudiants, selectLoading, selectError } from './ListSlice';
+import { fetchEtudiants } from '../redux/ListSlice';
 import DeleteEtudiant from './DeleteEtudiant';
 
 const ListEtudiant = () => {
@@ -28,8 +28,8 @@ const ListEtudiant = () => {
   ]);*/
 
  
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
+  // const loading = useSelector(selectLoading);
+  // const error = useSelector(selectError);
   const [etudiants, setEtudiants] = useState([]);
 
   
@@ -47,13 +47,13 @@ const ListEtudiant = () => {
     );
   };
 
-  if (loading) {
-    return <p className="text-center text-gray-600">Chargement des étudiants...</p>;
-  }
+  // if (loading) {
+  //   return <p className="text-center text-gray-600">Chargement des étudiants...</p>;
+  // }
 
-  if (error) {
-    return <p className="text-center text-red-500">Erreur : {error}</p>;
-  }
+  // if (error) {
+  //   return <p className="text-center text-red-500">Erreur : {error}</p>;
+  // }
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-100 py-8">

@@ -3,7 +3,7 @@ import "font-awesome/css/font-awesome.min.css";
 import axios from "axios";
 
 export const CreateEtudiant = () => {
-  const [modifiable, setModifiable] = useState(true); 
+  const [modifiable, setModifiable] = useState(true);
   const [etudiant, setEtudiant] = useState({
     noEtudiantNat: "",
     anneePro: "",
@@ -35,7 +35,7 @@ export const CreateEtudiant = () => {
     grpeAnglais: "",
     abandonMotif: "",
     abandonDate: null,
-    estDiplome: false,
+    estDiplome: "N",
   });
 
   const handleChange = (e) => {
@@ -48,30 +48,34 @@ export const CreateEtudiant = () => {
 
   const handleCreate = async () => {
     try {
-      await axios.post("http://localhost:8080/api/create", etudiant); 
+      await axios.post("http://localhost:8082/etu", etudiant);
       alert("Étudiant créé avec succès !");
     } catch (error) {
       alert("Erreur lors de la création");
     }
   };
 
-  const renderField = (label, name, value, type = "text") => (
-    <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-600">{label}:</label>
-      <input
-        name={name}
-        type={type}
-        value={value}
-        onChange={handleChange}
-        disabled={!modifiable}
-        className={`mt-1 block w-full p-2 text-sm border rounded-lg ${
-          modifiable
-            ? "border-blue-500 bg-white"
-            : "border-gray-300 bg-gray-100"
-        } focus:ring focus:ring-blue-200`}
-      />
-    </div>
+  const renderField = (label, name, value, type = "text", constraints = {}) => (
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-600">{label}:</label>
+        <input
+            name={name}
+            type={type}
+            value={value}
+            onChange={handleChange}
+            disabled={!modifiable}
+            maxLength={constraints.maxLength}
+            required={constraints.required}
+            pattern={constraints.pattern}
+            className={`mt-1 block w-full p-2 text-sm border rounded-lg ${
+                modifiable
+                    ? "border-blue-500 bg-white"
+                    : "border-gray-300 bg-gray-100"
+            } focus:ring focus:ring-blue-200`}
+        />
+      </div>
   );
+
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 flex justify-center items-center">
@@ -81,32 +85,52 @@ export const CreateEtudiant = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {renderField("Nom", "nom", etudiant.nom)}
-        {renderField("Prenom", "prenom", etudiant.prenom)}
-
-          {renderField("Numéro Étudiant National", "noEtudiantNat", etudiant.noEtudiantNat)}
-          {renderField("Année Professionnelle", "anneePro", etudiant.anneePro)}
-          {renderField("Code Com", "codeCom", etudiant.codeCom)}
-          {renderField("Numéro Étudiant UBO", "noEtudiantUbo", etudiant.noEtudiantUbo)}
-          {renderField("Sexe", "sexe", etudiant.sexe)}
-          {renderField("Date de Naissance", "dateNaissance", etudiant.dateNaissance)}
-          {renderField("Lieu de Naissance", "lieuNaissance", etudiant.lieuNaissance)}
-          {renderField("Situation", "situation", etudiant.situation)}
-          {renderField("Nationalité", "nationalite", etudiant.nationalite)}
-          {renderField("Téléphone Portable", "telPort", etudiant.telPort)}
-          {renderField("Téléphone Fixe", "telFixe", etudiant.telFixe)}
-          {renderField("Email", "email", etudiant.email, "email")}
-          {renderField("Adresse Actuelle", "actuAdresse", etudiant.actuAdresse)}
-          {renderField("Adresse Permanente", "permAdresse", etudiant.permAdresse)}
-          {renderField("Dernier Diplôme", "dernierDiplome", etudiant.dernierDiplome)}
-          {renderField("Université", "universite", etudiant.universite)}
-          {renderField("Sigle Étudiant", "sigleEtu", etudiant.sigleEtu)}
-          {renderField("Compte CRI", "compteCri", etudiant.compteCri)}
-          {renderField("Email UBO", "uboEmail", etudiant.uboEmail, "email")}
-          {renderField("Groupe Anglais", "grpeAnglais", etudiant.grpeAnglais)}
-          {renderField("Motif d'Abandon", "abandonMotif", etudiant.abandonMotif || "Non applicable")}
-          {renderField("Date d'Abandon", "abandonDate", etudiant.abandonDate || "Non applicable")}
-          {renderField("Diplômé", "estDiplome", etudiant.estDiplome ? "Oui" : "Non")}
+          {renderField("Numéro Étudiant National", "noEtudiantNat", etudiant.noEtudiantNat, "text", {
+            maxLength: 50,
+            required: true
+          })}
+          {renderField("Année Professionnelle", "anneePro", etudiant.anneePro, "text", {maxLength: 10, required: true})}
+          {renderField("Code Com", "codeCom", etudiant.codeCom, "text", {maxLength: 10})}
+          {renderField("Numéro Étudiant UBO", "noEtudiantUbo", etudiant.noEtudiantUbo, "text", {maxLength: 20})}
+          {renderField("Sexe", "sexe", etudiant.sexe, "text", {maxLength: 1, required: true})}
+          {renderField("Nom", "nom", etudiant.nom, "text", {maxLength: 50, required: true})}
+          {renderField("Prénom", "prenom", etudiant.prenom, "text", {maxLength: 50, required: true})}
+          {renderField("Date de Naissance", "dateNaissance", etudiant.dateNaissance, "date", {required: true})}
+          {renderField("Lieu de Naissance", "lieuNaissance", etudiant.lieuNaissance, "text", {
+            maxLength: 255,
+            required: true
+          })}
+          {renderField("Situation", "situation", etudiant.situation, "text", {maxLength: 3, required: true})}
+          {renderField("Nationalité", "nationalite", etudiant.nationalite || "Française", "text", {
+            maxLength: 50,
+            required: true
+          })}
+          {renderField("Téléphone Portable", "telPort", etudiant.telPort, "text", {maxLength: 20})}
+          {renderField("Téléphone Fixe", "telFixe", etudiant.telFixe, "text", {maxLength: 20})}
+          {renderField("Email", "email", etudiant.email, "email", {maxLength: 255})}
+          {renderField("Adresse Actuelle", "actuAdresse", etudiant.actuAdresse, "text", {maxLength: 255})}
+          {renderField("Code Postal Actuel", "actuCp", etudiant.actuCp, "text", {maxLength: 10})}
+          {renderField("Ville Actuelle", "actuVille", etudiant.actuVille, "text", {maxLength: 255})}
+          {renderField("Pays Actuel", "actuPays", etudiant.actuPays, "text", {maxLength: 255})}
+          {renderField("Adresse Permanente", "permAdresse", etudiant.permAdresse, "text", {
+            maxLength: 255,
+            required: true
+          })}
+          {renderField("Code Postal Permanent", "permCp", etudiant.permCp, "text", {maxLength: 10, required: true})}
+          {renderField("Ville Permanente", "permVille", etudiant.permVille, "text", {maxLength: 255, required: true})}
+          {renderField("Pays Permanent", "permPays", etudiant.permPays, "text", {maxLength: 255, required: true})}
+          {renderField("Dernier Diplôme", "dernierDiplome", etudiant.dernierDiplome, "text", {
+            maxLength: 255,
+            required: true
+          })}
+          {renderField("Université", "universite", etudiant.universite, "text", {maxLength: 255, required: true})}
+          {renderField("Sigle Étudiant", "sigleEtu", etudiant.sigleEtu, "text", {maxLength: 3, required: true})}
+          {renderField("Compte CRI", "compteCri", etudiant.compteCri, "text", {maxLength: 10, required: true})}
+          {renderField("Email UBO", "uboEmail", etudiant.uboEmail, "email", {maxLength: 255})}
+          {renderField("Groupe Anglais", "grpeAnglais", etudiant.grpeAnglais, "number")}
+          {renderField("Motif d'Abandon", "abandonMotif", etudiant.abandonMotif, "text", {maxLength: 255})}
+          {renderField("Date d'Abandon", "abandonDate", etudiant.abandonDate, "date")}
+          {renderField("Diplômé", "estDiplome", etudiant.estDiplome, "text", { maxLength: 1, required: true })}
         </div>
 
         <button
@@ -120,4 +144,3 @@ export const CreateEtudiant = () => {
     </div>
   );
 };
-

@@ -1,10 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 
-const DeleteEtudiant = ({ id, onDelete }) => {
+const DeleteEtudiant = ({ noEtudiantNat, onDelete }) => {
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8080/etudiants/${id}`);
+      await axios.delete(`http://localhost:8082/etu/${noEtudiantNat}`);
       onDelete(noEtudiantNat);
     } catch (error) {
       console.error("Erreur lors de la suppression de l'étudiant :", error);

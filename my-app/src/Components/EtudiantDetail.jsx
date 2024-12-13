@@ -1,51 +1,31 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import "font-awesome/css/font-awesome.min.css";
-import { useSelector } from "react-redux";
-import { selectEtudiant } from "../redux/StudentSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchEtudiant, selectEtudiant} from "../redux/StudentSlice";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import {fetchEtudiants} from "../redux/ListSlice";
 
  const EtudiantDetail = () => {
   const [modifiable, setModifiable] = useState(false);
   const { id } = useParams();
+     const dispatch = useDispatch();
 
-  const initialEtudiant = useSelector(selectEtudiant);
 
-  /*const initialEtudiant = {
-    noEtudiantNat: "1234567890",
-    anneePro: 2024,
-    codeCom: "56789",
-    noEtudiantUbo: "UBO202400123",
-    sexe: "M",
-    nom: "Dupont",
-    prenom: "Jean",
-    dateNaissance: "1999-04-12",
-    lieuNaissance: "Paris",
-    situation: "Célibataire",
-    nationalite: "Française",
-    telPort: "0601020304",
-    telFixe: "0147852369",
-    email: "jean.dupont@example.com",
-    actuAdresse: "12 Rue de Paris",
-    actuCp: "75001",
-    actuVille: "Paris",
-    actuPays: "France",
-    permAdresse: "10 Avenue des Champs-Élysées",
-    permCp: "75008",
-    permVille: "Paris",
-    permPays: "France",
-    dernierDiplome: "Baccalauréat",
-    universite: "Université de Bretagne Occidentale",
-    sigleEtu: "UBO123456",
-    compteCri: "CRISTUD123456",
-    uboEmail: "jean.dupont@univ-brest.fr",
-    grpeAnglais: "B1",
-    abandonMotif: "Non applicable",
-    abandonDate: null,
-    estDiplome: false,
-  };
-*/
-  const [etudiant, setEtudiant] = useState(initialEtudiant);
+
+     const initialEtudiant = useSelector(selectEtudiant);
+     console.log(id)
+     console.log(initialEtudiant);
+
+     const [etudiant, setEtudiant] = useState(initialEtudiant);
+
+     useEffect(() => {
+         dispatch(fetchEtudiant(id))
+             .unwrap()
+             .then((data) => setEtudiant(data))
+             .catch((err) => console.error("Erreur lors de la récupération des étudiants :", err));
+     }, [dispatch]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -58,7 +38,7 @@ import { useParams } from "react-router-dom";
   const toggleEditMode = async () => {
     if (modifiable) {
       try {
-        await axios.put(`http://localhost:8080/etudiants/${id}`, etudiant);
+        await axios.put(`http://localhost:8082/etu/${id}`, etudiant);
         alert("Modifications sauvegardées !");
       } catch (error) {
         alert("Erreur lors de la sauvegarde");
@@ -119,7 +99,7 @@ import { useParams } from "react-router-dom";
           {renderField("Téléphone Portable", "telPort", etudiant.telPort)}
           {renderField("Téléphone Fixe", "telFixe", etudiant.telFixe)}
           {renderField("Email", "email", etudiant.email, "email")}
-          {renderField("Adresse Actuelle", "actuAdresse", etudiant.actuAdresse)}
+          {renderField("Adresse Actuellhttp://localhost:3000/Detail/6589RS236Fe", "actuAdresse", etudiant.actuAdresse)}
           {renderField("Adresse Permanente", "permAdresse", etudiant.permAdresse)}
           {renderField("Dernier Diplôme", "dernierDiplome", etudiant.dernierDiplome)}
           {renderField("Université", "universite", etudiant.universite)}
