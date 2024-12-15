@@ -1,0 +1,20 @@
+-- 
+-- Script de création des SEQUENCES du CSCI-ADM
+-- Ph. Saliou - 04 octobre 2012 - 
+--	
+ 
+PROMPT Creating Sequence 'EMP_SEQ'
+CREATE 	SEQUENCE EMP_SEQ
+	START with 100
+ 	NOMAXVALUE
+ 	NOMINVALUE
+ 	NOCYCLE
+/
+
+PROMPT Creating Sequence 'ENT_SEQ'
+CREATE 	SEQUENCE ENT_SEQ
+	START with 100
+ 	NOMAXVALUE
+ 	NOMINVALUE
+ 	NOCYCLE
+/
